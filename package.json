@@ -1,0 +1,30 @@
+{
+  "name": "webpack-favicon-plugin",
+  "version": "0.0.1",
+  "description": "Generate favicons",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnked/webpack-favicon-plugin.git"
+  },
+  "keywords": [
+    "favicon",
+    "webpack"
+  ],
+  "author": "Edik Bulikyan <ed.proff@gmail.com> (https://github.com/lnked)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lnked/webpack-favicon-plugin/issues"
+  },
+  "homepage": "https://github.com/lnked/webpack-favicon-plugin#readme",
+  "dependencies": {
+    "favicons": "^4.8.6",
+    "webpack": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3"
+  }
+}

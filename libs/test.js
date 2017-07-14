@@ -1,16 +1,14 @@
 'use strict';
 
 const path = require('path');
-const md5File = require('md5-file');
 const favicons = require('favicons');
 const writeFile = require('write');
 
 function FaviconWebpackPlugin(options) {
-    const dist = path.resolve(__dirname, 'dist');
+    const dist = 'dist';
     const source = options.logo;
-    const configuration = {};
 
-    const byDefault = {
+    const configuration = {
         prefix: 'fav-[hash:5]/',
         appName: null,                  // Your application's name. `string`
         appDescription: null,           // Your application's description. `string`
@@ -26,9 +24,8 @@ function FaviconWebpackPlugin(options) {
         logging: false,                 // Print logs to console? `boolean`
         online: false,                  // Use RealFaviconGenerator to create favicons? `boolean`
         preferOnline: false,            // Use offline generation, if online generation has failed. `boolean`
-
         icons: {
-            android: false,              // Create Android homescreen icon. `boolean` or `{ offset, background, shadow }`
+            android: true,               // Create Android homescreen icon. `boolean` or `{ offset, background, shadow }`
             appleIcon: false,            // Create Apple touch icons. `boolean` or `{ offset, background }`
             appleStartup: false,         // Create Apple startup images. `boolean` or `{ offset, background }`
             coast: false,                // Create Opera Coast icon with offset 25%. `boolean` or `{ offset, background }`
@@ -39,9 +36,7 @@ function FaviconWebpackPlugin(options) {
         }
     };
 
-    configuration.icons = Object.assign({}, byDefault.icons, options.icons);
-
-    console.log('configuration: ', configuration);
+    const config = Object.assign(configuration, options);
 
     const callback = function (error, response) {
         if (error) {
@@ -52,7 +47,8 @@ function FaviconWebpackPlugin(options) {
         }
 
         response.images.forEach((icon) => {
-            writeFile(path.resolve(dist, icon.name), icon.contents, function(err) {
+            // console.log(icon, icon.name, icon.contents);
+            writeFile(path.resolve(__dirname, dist, icon.name), icon.contents, function(err) {
                 if (err) console.log(err);
             });
         });
@@ -69,27 +65,53 @@ function FaviconWebpackPlugin(options) {
 
 FaviconWebpackPlugin({
     logo: 'example/favicon.svg',
-    // The prefix for all image files (might be a folder or a name)
     prefix: 'fav-[hash:5]/',
-    // Emit all stats of the generated icons
     emitStats: false,
-    // The name of the json containing all favicon information
     statsFilename: 'iconstats-[hash].json',
-    // Generate a cache file with control hashes and
-    // don't rebuild the favicons until those hashes change
     persistentCache: true,
-    // Inject the html into the html-webpack-plugin
     inject: true,
-    // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
     background: '#673ab8',
-    // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
     title: 'React starter',
-    // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+
+    appName: null,                  // Your application's name. `string` 
+    appDescription: null,           // Your application's description. `string` 
+    developerName: null,            // Your (or your developer's) name. `string` 
+    developerURL: null,             // Your (or your developer's) URL. `string` 
+    background: "#fff",             // Background colour for flattened icons. `string` 
+    theme_color: "#fff",            // Theme color for browser chrome. `string` 
+    path: "/",                      // Path for overriding default icons path. `string` 
+    display: "standalone",          // Android display: "browser" or "standalone". `string` 
+    orientation: "portrait",        // Android orientation: "portrait" or "landscape". `string` 
+    start_url: "/?homescreen=1",    // Android start application's URL. `string` 
+    version: "1.0",                 // Your application's version number. `number` 
+    logging: false,                 // Print logs to console? `boolean` 
+    online: false,                  // Use RealFaviconGenerator to create favicons? `boolean` 
+    preferOnline: false,            // Use offline generation, if online generation has failed. `boolean` 
     icons: {
-        android: true,
-        windows: true
+        android: true,              // Create Android homescreen icon. `boolean` or `{ offset, background, shadow }` 
+        appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset, background }` 
+        appleStartup: true,         // Create Apple startup images. `boolean` or `{ offset, background }` 
+        coast: { offset: 25 },      // Create Opera Coast icon with offset 25%. `boolean` or `{ offset, background }` 
+        favicons: true,             // Create regular favicons. `boolean` 
+        firefox: true,              // Create Firefox OS icons. `boolean` or `{ offset, background }` 
+        windows: true,              // Create Windows 8 tile icons. `boolean` or `{ background }` 
+        yandex: true                // Create Yandex browser icon. `boolean` or `{ background }` 
     }
+    // icons: {
+    //     firefox: true,
+    //     android: true,
+    //     favicons: true,
+    //     appleIcon: true,
+    //     // opengraph: false,
+    //     appleStartup: false,
+    //     coast: false, // { offset: 25 },
+    //     // twitter: false,
+    //     yandex: false,
+    //     windows: true
+    // }
 });
+
+// const md5File = require('md5-file')
  
 // /* Async usage */
 // md5File('LICENSE.md', (err, hash) => {

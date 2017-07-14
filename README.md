@@ -1,7 +1,7 @@
 # Webpack Favicon Plugin
 
 ```bash
-yarn add -D git+ssh://git@gitlab.com/lnked/webpack-favicon-plugin.git#0.0.1
+yarn add -D git+ssh://git@gitlab.com/lnked/webpack-favicon-plugin.git#0.0.2
 
 ```
 
@@ -10,7 +10,8 @@ const FaviconWebpackPlugin = require('webpack-favicon-plugin')
 
 plugins: [
     new FaviconWebpackPlugin({
-        /* options here */    
+        logo: 'logo.svg'
+        /* options here */
     })
 ],
 ...
